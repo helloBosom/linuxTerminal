@@ -7,7 +7,7 @@ import java.util.Enumeration;
 kWcjXWb/7TLo8bJicJBhr2/nE1KZZxabhY8jKwofeYcbcO8li0TXppmytRO4A85M2vC7NqD+X2iBtIbsHHNN+GY9EiRi6HzD+Re4J5wfXpzKunWKkbNwEZlapkKaBiQPkXZ/sA==
  */
 public class getLinuxIP {
-    private static String getLinuxLocalIp() throws SocketException {
+    public static String getLinuxLocalIp() {
         String ip = "";
         try {
             for (Enumeration<NetworkInterface> en = NetworkInterface.getNetworkInterfaces(); en.hasMoreElements(); ) {

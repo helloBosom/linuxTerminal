@@ -28,5 +28,4 @@ public class Terminal {
         this.argument = argument;
     }
 
-
 }

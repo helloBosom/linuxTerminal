@@ -3,7 +3,12 @@ import java.util.Iterator;
 
 public class CommandUtil {
     public static void Cd() {
-        OrderUtil.path = "/" + OrderUtil.userName;
+        OrderUtil.path = "~";
+        printLocation();
+    }
+
+    static void printLocation() {
+        OrderUtil.UpdateLocation();
         System.out.print(OrderUtil.location);
     }
 
@@ -15,17 +20,21 @@ public class CommandUtil {
                 if (file1.getName().length() < 70) {
                     length += file1.getName().length();
                     if (length > 70) {
-                        System.out.println();
+                        System.out.print("\r\n");
+                        length = 0;
+                        continue;
                     } else {
-                        System.out.print(file1);
+                        System.out.print(file1 + " ");
                     }
                 } else {
-                    System.out.println(file1);
+                    System.out.print(file1);
                 }
             }
         } else {
             System.out.print(OrderUtil.file);
         }
+        System.out.print("\r\n");
+        CommandUtil.printLocation();
     }
 
     public static void mkdir() {
@@ -52,41 +61,55 @@ public class CommandUtil {
     public static void execute(String command) {
         if (null == command) {
             //path保留当前路径
-            System.out.print(OrderUtil.location);
+            printLocation();
         } else {
             switch (command) {
                 case "cd":
                     Cd();
+                    break;
                 case "ls":
                     listFileAcross();
+                    break;
                 case "ll":
                     listFileVertical();
+                    break;
                 case "mkdir":
                     mkdir();
+                    break;
                 case "rmdir":
                     rmdir();
+                    break;
                 case "pwd":
                     ShowPath();
+                    break;
                 case "cat":
                     cat();
+                    break;
                 case "vim":
                     vi();
+                    break;
                 case "vi":
                     vi();
+                    break;
                 case "ifconfig":
                     ip();
+                    break;
                 case "shutdown":
                     shutdown();
+                    break;
                 case "help":
                     help();
+                    break;
                 default:
                     notRealize();
+                    break;
             }
         }
     }
 
     private static void ip() {
-        System.out.print(OrderUtil.ip);
+        System.out.println(OrderUtil.ip);
+        printLocation();
     }
 
     //TODO
@@ -109,7 +132,7 @@ public class CommandUtil {
                     System.out.println();
                 }
             }
-            System.out.print(OrderUtil.location);
+            printLocation();
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         } catch (IOException e) {
@@ -123,6 +146,7 @@ public class CommandUtil {
 
     private static void ShowPath() {
         System.out.println(OrderUtil.path);
+        printLocation();
     }
 
     private static void listFileVertical() {
@@ -144,6 +168,7 @@ public class CommandUtil {
         System.out.println("rmdir: remove a file");
         System.out.println("shutdown: power off the computer");
         System.out.println("ifconfig:ip address");
+        printLocation();
     }
 
     private static void notRealize() {

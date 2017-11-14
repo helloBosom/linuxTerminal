@@ -10,7 +10,7 @@ public class OrderUtil {
     public static File file = new File(path.toString());
     public static String userName = System.getProperties().getProperty("user.name");
     public static String ip = getIp();
-    public static String location = left + userName + "@" + ip + path + right;
+    public static String location;
     public static String order;
     public static String command;
     public static String argument;
@@ -21,11 +21,12 @@ public class OrderUtil {
     public static boolean flag;
 
     private static String getIp() {
-        try {
-            ip = InetAddress.getLocalHost().getHostAddress();
-        } catch (UnknownHostException e) {
-            e.printStackTrace();
-        }
+//        try {
+//            ip = InetAddress.getLocalHost().getHostAddress();
+//        } catch (UnknownHostException e) {
+//            e.printStackTrace();
+//        }
+        ip = getLinuxIP.getLinuxLocalIp() + " ";
         return ip;
     }
 
@@ -47,7 +48,10 @@ public class OrderUtil {
             System.out.printf(location);
         }
     }
-
+    public static void UpdateLocation() {
+        OrderUtil.location
+                = OrderUtil.left + OrderUtil.userName + "@" + OrderUtil.ip + OrderUtil.path + OrderUtil.right;
+    }
     private static String useString() {
         order = order.trim();
         isContainSpace();

@@ -8,25 +8,35 @@ public class OptionUtil {
                     case "/":
                         OrderUtil.back = option;
                         returnRoot();
+                        break;
                     case "~":
                         OrderUtil.back = option;
                         returnRootHome();
+                        break;
                     case "-":
                         OrderUtil.back = option;
                         returnNode();
+                        break;
                     case "..":
                         OrderUtil.back = option;
                         returnParent();
+                        break;
                     default:
                         OrderUtil.back = option;
                         goIntoDir(option);
+                        break;
                 }
             case "mkdir":
                 makeDir(option);
+                break;
             case "rmdir":
                 rmdir(option);
+                break;
             case "shutdown":
                 shutdown(option);
+                break;
+            default:
+
         }
     }
 
@@ -49,6 +59,7 @@ public class OptionUtil {
                 OrderUtil.path = temp;
             }
         }
+        CommandUtil.printLocation();
     }
 
     private static void rmdir(String option) {
@@ -62,7 +73,7 @@ public class OptionUtil {
             }
             OrderUtil.path = temp;
         }
-        System.out.print(OrderUtil.location);
+        CommandUtil.printLocation();
     }
 
     private static void shutdown(String option) {
@@ -86,36 +97,35 @@ public class OptionUtil {
             OrderUtil.path = option;
             OrderUtil.file.mkdirs();
             OrderUtil.path = temp;
-            System.out.print(OrderUtil.location);
+            CommandUtil.printLocation();
         } else {
             String temp = OrderUtil.path;
             OrderUtil.path += option;
             OrderUtil.file.mkdir();
             OrderUtil.path = temp;
-            System.out.print(OrderUtil.location);
+            CommandUtil.printLocation();
         }
 
     }
 
     private static void returnNode() {
         OrderUtil.path = OrderUtil.back;
-        System.out.println(OrderUtil.location);
+        CommandUtil.printLocation();
     }
 
     private static void returnParent() {
         int index = OrderUtil.path.lastIndexOf("/");
         OrderUtil.path = OrderUtil.path.substring(0, index);
-        System.out.print(OrderUtil.location);
+        CommandUtil.printLocation();
     }
 
     private static void returnRootHome() {
         OrderUtil.path = "/home";
-        System.out.print(OrderUtil.location);
+        CommandUtil.printLocation();
     }
 
     private static void returnRoot() {
-
         OrderUtil.path = "/";
-        System.out.print(OrderUtil.location);
+        CommandUtil.printLocation();
     }
 }
