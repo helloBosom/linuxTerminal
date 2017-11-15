@@ -1,3 +1,7 @@
+import java.io.FileNotFoundException;
+import java.io.FileReader;
+import java.io.IOException;
+import java.io.Reader;
 import java.util.Scanner;
 
 public class OptionUtil {
@@ -6,23 +10,23 @@ public class OptionUtil {
             case "cd":
                 switch (option) {
                     case "/":
-                        OrderUtil.back = option;
+                        CommandUtil.backPath();
                         returnRoot();
                         break;
                     case "~":
-                        OrderUtil.back = option;
+                        CommandUtil.backPath();
                         returnRootHome();
                         break;
                     case "-":
-                        OrderUtil.back = option;
+                        CommandUtil.backPath();
                         returnNode();
                         break;
                     case "..":
-                        OrderUtil.back = option;
+                        CommandUtil.backPath();
                         returnParent();
                         break;
                     default:
-                        OrderUtil.back = option;
+                        CommandUtil.backPath();
                         goIntoDir(option);
                         break;
                 }
@@ -35,29 +39,61 @@ public class OptionUtil {
             case "shutdown":
                 shutdown(option);
                 break;
+            case "cat":
+                cat(option);
+                break;
+            case "vi":
+                vi(option);
             default:
+        }
+    }
 
+    private static void vi(String option) {
+        updatePath(option);
+        //TODO
+
+    }
+
+    static void updatePath(String option) {
+        if (option.startsWith("/")) {
+            OrderUtil.path = option;
+        } else {
+            OrderUtil.path += option;
+        }
+    }
+
+    private static void cat(String option) {
+        updatePath(option);
+        OrderUtil.updateFile();
+        try {
+            Reader reader = new FileReader(OrderUtil.file);
+            int i = 140;
+            int off = 0;
+            char[] a = new char[i];
+            while (reader.read() != -1) {
+                reader.read(a, off, i);
+                off += i;
+                for (char c : a) {
+                    System.out.print(c);
+                }
+                if (OrderUtil.file.length() - off > i) {
+                    System.out.println();
+                }
+            }
+            CommandUtil.printLocation();
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
         }
     }
 
     private static void goIntoDir(String option) {
-        if (option.startsWith("/")) {
-            String temp = OrderUtil.path;
-            OrderUtil.path = option;
-            if (OrderUtil.file.exists()) {
-                System.out.print(OrderUtil.location);
-            } else {
-                OrderUtil.path = temp;
-            }
+        updatePath(option);
+        if (OrderUtil.file.exists()) {
+            System.out.print(OrderUtil.location);
         } else {
-            String temp = OrderUtil.path;
-            OrderUtil.path += option;
-            if (OrderUtil.file.exists()) {
-                System.out.print(OrderUtil.location);
-            } else {
-                System.out.print("System not find the directory:'" + option + "'");
-                OrderUtil.path = temp;
-            }
+            System.out.println("System not find the directory:'" + option + "'");
         }
         CommandUtil.printLocation();
     }
@@ -66,21 +102,22 @@ public class OptionUtil {
         System.out.println("do you sure to delete the file?");
         Scanner scanner = new Scanner(System.in);
         if ("y".equals(scanner.next())) {
-            String temp = OrderUtil.path;
-            OrderUtil.path += option;
+            //TODO
+
             if (!OrderUtil.file.delete()) {
-                System.out.println("no empty or protected");
+                System.out.println("not empty or protected");
             }
-            OrderUtil.path = temp;
         }
         CommandUtil.printLocation();
     }
 
     private static void shutdown(String option) {
-        if (option.startsWith("-")) {
+        if (option.startsWith("--")) {
             switch (option.substring(1)) {
                 case "p":
                     shutdownPower();
+                    break;
+                default:
             }
         } else if ("now".equals(option)) {
             System.exit(0);
@@ -92,20 +129,9 @@ public class OptionUtil {
     }
 
     private static void makeDir(String option) {
-        if (option.startsWith("/")) {
-            String temp = OrderUtil.path;
-            OrderUtil.path = option;
-            OrderUtil.file.mkdirs();
-            OrderUtil.path = temp;
-            CommandUtil.printLocation();
-        } else {
-            String temp = OrderUtil.path;
-            OrderUtil.path += option;
-            OrderUtil.file.mkdir();
-            OrderUtil.path = temp;
-            CommandUtil.printLocation();
-        }
-
+        CommandUtil.backPath();
+        OrderUtil.file.mkdir();
+        CommandUtil.printLocation();
     }
 
     private static void returnNode() {
@@ -120,7 +146,7 @@ public class OptionUtil {
     }
 
     private static void returnRootHome() {
-        OrderUtil.path = "/home";
+        OrderUtil.path = "/" + OrderUtil.userName;
         CommandUtil.printLocation();
     }
 

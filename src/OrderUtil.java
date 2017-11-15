@@ -7,9 +7,9 @@ public class OrderUtil {
     public static String path = "/";
     public static String left = "[";
     public static String right = "]#";
-    public static File file = new File(path.toString());
-    public static String userName = System.getProperties().getProperty("user.name");
-    public static String ip = getIp();
+    public static File file;
+    public static String userName;
+    public static String ip;
     public static String location;
     public static String order;
     public static String command;
@@ -20,14 +20,21 @@ public class OrderUtil {
     public static int index;
     public static boolean flag;
 
-    private static String getIp() {
+    public static void updateUserName() {
+        userName = System.getProperties().getProperty("user.name");
+    }
+
+    public static void updateIp() {
 //        try {
 //            ip = InetAddress.getLocalHost().getHostAddress();
 //        } catch (UnknownHostException e) {
 //            e.printStackTrace();
 //        }
         ip = getLinuxIP.getLinuxLocalIp() + " ";
-        return ip;
+    }
+
+    public static void updateFile() {
+        file = new File(path);
     }
 
     public static void dealOrder() {
@@ -48,10 +55,12 @@ public class OrderUtil {
             System.out.printf(location);
         }
     }
+
     public static void UpdateLocation() {
         OrderUtil.location
                 = OrderUtil.left + OrderUtil.userName + "@" + OrderUtil.ip + OrderUtil.path + OrderUtil.right;
     }
+
     private static String useString() {
         order = order.trim();
         isContainSpace();

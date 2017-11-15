@@ -1,10 +1,14 @@
 import java.io.*;
-import java.util.Iterator;
 
 public class CommandUtil {
     public static void Cd() {
+        backPath();
         OrderUtil.path = "~";
         printLocation();
+    }
+
+    static void backPath() {
+        OrderUtil.back = OrderUtil.path;
     }
 
     static void printLocation() {
@@ -13,6 +17,7 @@ public class CommandUtil {
     }
 
     public static void listFileAcross() {
+        OrderUtil.updateFile();
         if (OrderUtil.file.isDirectory()) {
             File[] file = OrderUtil.file.listFiles();
             int length = 0;
@@ -117,31 +122,11 @@ public class CommandUtil {
     to check
      */
     private static void cat() {
-        try {
-            Reader reader = new FileReader(OrderUtil.file);
-            int i = 140;
-            int off = 0;
-            char[] a = new char[i];
-            while (reader.read() != -1) {
-                reader.read(a, off, i);
-                off += i;
-                for (char c : a) {
-                    System.out.print(c);
-                }
-                if (OrderUtil.file.length() - off > i) {
-                    System.out.println();
-                }
-            }
-            printLocation();
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+        System.out.println("use cat like 'cat [option] [argument]'");
     }
 
     private static void vi() {
-
+        System.out.println("use vi like 'vi [option] [argument]'");
     }
 
     private static void ShowPath() {
@@ -150,14 +135,16 @@ public class CommandUtil {
     }
 
     private static void listFileVertical() {
+        OrderUtil.updateFile();
         if (OrderUtil.file.isDirectory()) {
             File[] file = OrderUtil.file.listFiles();
             for (File file1 : file) {
-                System.out.print(file1);
+                System.out.println(file1);
             }
         } else {
-            System.out.print(OrderUtil.file);
+            System.out.println(OrderUtil.file);
         }
+        printLocation();
     }
 
     private static void help() {
@@ -168,10 +155,11 @@ public class CommandUtil {
         System.out.println("rmdir: remove a file");
         System.out.println("shutdown: power off the computer");
         System.out.println("ifconfig:ip address");
+        System.out.println("...");
         printLocation();
     }
 
     private static void notRealize() {
-        System.out.println("the command:‘" + OrderUtil.command + "’is not support now,please wait and see,thank you");
+        System.out.println("the command: '" + OrderUtil.command + "' is not support now,please wait and see,thank you");
     }
 }
