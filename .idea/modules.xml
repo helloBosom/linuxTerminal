@@ -2,7 +2,9 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/terminal.iml" filepath="$PROJECT_DIR$/terminal.iml" />
+      <module fileurl="file://$PROJECT_DIR$/firstWay/firstWay.iml" filepath="$PROJECT_DIR$/firstWay/firstWay.iml" />
+      <module fileurl="file://$PROJECT_DIR$/linuxTerminal.iml" filepath="$PROJECT_DIR$/linuxTerminal.iml" />
+      <module fileurl="file://$PROJECT_DIR$/secondWay/secondWay.iml" filepath="$PROJECT_DIR$/secondWay/secondWay.iml" />
     </modules>
   </component>
 </project>

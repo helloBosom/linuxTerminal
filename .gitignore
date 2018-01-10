@@ -2,8 +2,7 @@
 .DS_Store
 
 # IDEA
-.idea/*
-.idea/
+*.idea
 */target/
 *.iml
 *.class

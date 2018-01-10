@@ -1,6 +1,6 @@
+package com.logic.order;
+
 import java.io.File;
-import java.net.InetAddress;
-import java.net.UnknownHostException;
 
 
 public class OrderUtil {

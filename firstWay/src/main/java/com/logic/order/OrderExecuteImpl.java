@@ -1,3 +1,5 @@
+package com.logic.order;
+
 public class OrderExecuteImpl {
     public static void execute(Terminal terminal) {
         //System.out.print(OrderUtil.location);

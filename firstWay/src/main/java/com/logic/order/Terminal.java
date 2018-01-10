@@ -1,3 +1,5 @@
+package com.logic.order;
+
 public class Terminal {
 
     private String command;
