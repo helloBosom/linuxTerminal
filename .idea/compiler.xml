@@ -13,6 +13,7 @@
     </annotationProcessing>
     <bytecodeTargetLevel>
       <module name="firstWay" target="1.5" />
+      <module name="linuxTerminal" target="1.5" />
       <module name="secondWay" target="1.5" />
       <module name="terminal" target="1.5" />
     </bytecodeTargetLevel>
